@@ -1,0 +1,41 @@
+#generic git ignore
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore temporary files
+*.swp
+*~
+
+# Ignore IDE/Editor files
+.idea/
+.vscode/
+
+# Ignore dependencies
+/node_modules
+/bower_components
+
+# Ignore compiled binaries
+*.o
+*.out
+*.exe
+
+# Ignore log files
+*.log
+
+# Ignore environment-specific files
+.env
+
+# Ignore sensitive or private data
+config.json
+secrets.json
+
+# Ignore compiled Python bytecode
+__pycache__/
+
+# Ignore database files
+*.sqlite
+
+# Ignore image thumbnails
+thumbs.db
+

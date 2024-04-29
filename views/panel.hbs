@@ -1,0 +1,51 @@
+<form id="edit-user-form">
+    <div class="mb-3">
+        <label for="foto" class="form-label">Foto de perfil:</label>
+        <div class="profile-pic">
+            <img src="/imgs/{{user.foto}}" class="img-fluid" alt="Foto de perfil">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" value="{{user.nombre}}">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Contraseña:</label>
+        <input type="password" class="form-control" id="password" name="password" value="{{user.password}}">
+    </div>
+    <div class="mb-3">
+        <label for="exp" class="form-label">Años de Experiencia:</label>
+        <input type="number" class="form-control" id="exp" name="exp" value="{{user.anos_experiencia}}">
+    </div>
+    <div class="mb-3">
+        <label for="especialidad" class="form-label">Especialidad:</label>
+        <input type="text" class="form-control" id="especialidad" name="especialidad" value="{{user.especialidad}}">
+    </div>
+   
+    <button id="cambios" type="submit" class="btn btn-secondary">Guardar cambios</button>
+
+
+</form>
+
+<style>
+    .profile-pic {
+  width: 200px; 
+  height: 200px; 
+  overflow: hidden; 
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+</style>
+
+
+<script>
+    const cambios = document.getElementById("cambios");
+    cambios.addEventListener('click',function(e){
+        e.preventDefault()
+        console.log('clicl en cambios')
+    })
+</script>
