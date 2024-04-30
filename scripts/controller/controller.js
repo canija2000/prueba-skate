@@ -47,7 +47,10 @@ const verifyUser = async (req, res) => {
   
         if(response == true){
             const token = jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: '1h'});
-            res.status(200).json({token});
+            res.cookie('jwt', `Bearer ${token}`);
+            const  user = await findSkater(email);
+            res.status(200).render('panel', {user: user});
+
         }
         else{
             res.status(401).send('Usuario no autorizado');
@@ -55,52 +58,54 @@ const verifyUser = async (req, res) => {
 
     }
     
+// const verifyToken = (req, res, next) => {
+//     //recuperar token
+//     const token = req.cookies.jwt;
+//     //const token = req.headers.authorization.split(' ')[1];
+//     console.log(token);
+//     if(!token){
+//         return res.status(401).send('Usuario no autorizado');
+//     }
+//     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+//         if(err){
+//             return res.status(403).send('Usuario no autorizado');
+//         }
+//         const email = decoded.email;
+//         next();
+//     });
+// }
 
-const success = async(req, res) => {
-    const email = req.query.email;
-    try{
-        const user = await findSkater(email);
-        res.render('success', {user: user});
-
-    }catch(error){
-        console.log(error);
-        res.status(500).send('Internal Server Error');
-    }
-
-    
-}
 
 //entrando al panel
-const editUser = async(req, res) => {
+// const editUser = async(req, res) => {
 
-    const tok = req.headers['authorization']
-    const token = tok.split(' ')[1];
-    //const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const email = decoded.email;
-
-    try{
-        const user = await findSkater(email);
-        res.render('panel', {user: user});
-    }catch(error){
-        console.log(error);
-        res.status(500).send('Internal Server Error');
-    }  
-}
+//     const tok = req.cookies.jwt;
+//     const token = tok.split(' ')[1];
+//     //const token = req.headers.authorization.split(' ')[1];
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     const email = decoded.email;
+//     try{
+//         const user = await findSkater(email);
+//         res.render('panel', {user: user});
+//     }catch(error){
+//         console.log(error);
+//         res.status(500).send('Internal Server Error');
+//     }  
+// }
 
 
 //cambiando el panel
 
 const changeUser = async(req, res) => {
-    const tok = req.headers['authorization']
+
+    const tok = req.cookies.jwt;
     const token = tok.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const email = decoded.email;
     const {nombre, password, exp, espc} = req.body;
-    console.log('hola')
+
     try{
         const user = await updateSkater(email,nombre,password,exp,espc);
-        console.log(user)
         if(user == undefined){
             res.status(404).send('Usuario no encontrado');
         }
@@ -116,5 +121,13 @@ const changeUser = async(req, res) => {
     }
 }
 
+const logout = (req, res) => {
+    res.clearCookie('jwt');
+    res.redirect('/');
+}
 
-module.exports = {home, login, signup, register, verifyUser, editUser,success , changeUser};
+
+
+
+
+module.exports = {home, login, signup, register, verifyUser , changeUser,logout};

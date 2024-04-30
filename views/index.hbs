@@ -1,6 +1,6 @@
-<table class="table table-bordered border-primary">
-    <thead class="">
-        <tr>
+<table class=" thicker-border table table-bordered border-primary me-5 my-5 ">
+    <thead class="thicker-border">
+        <tr class=" thicker-border">
             <th scope="col">Foto</th>
             <th scope="col">Nombre</th>
             <th scope="col">Años de experiencia</th>
@@ -8,18 +8,18 @@
             <th scope="col">Estado</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody >
         {{#each skaters}}
-        <tr>
+        <tr >
             <td class="text-center"><img src="/imgs/{{this.foto}}" alt="{{this.nombre}}" width="100"></td>
-            <td>{{this.nombre}}</td>
-            <td>{{this.anos_experiencia}}</td>
-            <td>{{this.especialidad}}</td>
+            <td class="text-center align-middle">{{this.nombre}}</td>
+            <td class="text-center align-middle">{{this.anos_experiencia}}</td>
+            <td class="text-center align-middle">{{this.especialidad}}</td>
             {{! If the value of the estado property is true, display 'Aprobado'; otherwise, display 'En revisión' }}
             {{#if this.estado}}
-            <td style="color:rgb(83, 176, 83);">Aprobado</td>
+            <td class="text-center align-middle" style="color:rgb(83, 176, 83);">Aprobado</td>
             {{else}}
-            <td style="color:rgb(127, 67, 14);">En revisión</td>
+            <td class="text-center align-middle" style="color:rgb(127, 67, 14);">En revisión</td>
             {{/if}}
         </tr>
         {{/each}}
@@ -32,5 +32,14 @@
 <div class="col-12 py-4 d-flex justify-content-center align-items-center">
     <p class="px-3"><a href="/login">Inicia Sesión</a></p>
     <p class="px-3"><a href="/signup">Regístrate</a></p>
+    <p class="px-3"><a href="/admin">Admin</a></p>
 </div>
 
+<style>
+    /* Style for thicker borders */
+    .thicker-border{
+        border-bottom-width: 3px; /* Adjust the thickness as needed */
+        border-bottom-color: rgb(16, 0, 233); /* Adjust the color as needed */
+        border-style: double;
+    }
+</style>

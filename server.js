@@ -4,11 +4,12 @@ const port = 3000;
 const routes = require('./scripts/routes/routes');
 const  hbs  = require('express-handlebars');
 const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 
-
-
+app.use(cookieParser());
 app.use(express.static('public'));
 app.use(express.static('views'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({

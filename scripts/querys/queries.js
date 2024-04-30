@@ -11,6 +11,8 @@ const getSkaters = async () => {
     }
 }
 
+
+
 const insertSkater = async(email,nombre,pass,exp,espc,filen) => {
     try {
         const response = await 
@@ -51,15 +53,26 @@ const findSkater = async(email) => {
 }
 
 
-const updateSkater = async(email,nombre,pass,exp,espc,filen) => {
+const updateSkater = async(email,nombre,pass,exp,espc) => {
     try {
         const response = await 
-        pool.query('UPDATE skaters SET nombre = $2, password = $3, anos_experiencia = $4, especialidad = $5, foto = $6 WHERE email = $1',
-         [email,nombre,pass,exp, espc,filen]);
+        pool.query('UPDATE skaters SET nombre = $2, password = $3, anos_experiencia = $4, especialidad = $5 WHERE email = $1',
+         [email,nombre,pass,exp, espc]);
         return response.rows;
     } catch (error) {
         console.log(error);
     }
 }
-module.exports = { getSkaters, insertSkater, authUser, findSkater, updateSkater };
+
+const updateEstado = async(email) => {
+    try {
+        const response = await 
+        pool.query('UPDATE skaters SET estado = true WHERE email = $1',
+         [email]);
+        return response.rows;
+    } catch (error) {
+        console.log(error);
+    }
+}
+module.exports = { getSkaters, insertSkater, authUser, findSkater, updateSkater, updateEstado };
 

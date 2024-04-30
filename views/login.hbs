@@ -1,3 +1,10 @@
+
+<p><a href="/signup">Registrarse</a>
+</p>
+<a href="/">Inicio</a>
+
+{{! Path: views/register.hbs }}
+
 <div class="container  py-3">
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
@@ -40,21 +47,16 @@ login.addEventListener("click", function (e) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  })
-    .then(res => {
-      if(!res.ok){
-        throw new Error('Usuario no autorizado');
-      }
-      return res.json();
-    }).then(data  => {
-     localStorage.setItem('token', data.token);
-     localStorage.setItem('email', email); 
-      const url = `/success?email=${email}`;
-      window.location.href = url;
+  }).then(res ={
+    if(!res.ok){
+      alert("Error al iniciar sesion")
+    }
+    
+  })then(data =>{
+    localStorage.setItem("token", data.token);
+    console.log(err);
+  });
 
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 });
+
 </script>

@@ -1,7 +1,6 @@
-<form id="edit-user-form">
-    <div class="mb-3">
-        <label for="foto" class="form-label">Foto de perfil:</label>
-        <div class="profile-pic">
+<form id="edit-user-form" class="bg-success p-5" style="--bs-bg-opacity: .3; border-radius: 1rem">
+    <div class="mb-3 align-items-center d-flex justify-content-center">
+        <div class="profile-pic ">
             <img src="/imgs/{{user.foto}}" class="img-fluid" alt="Foto de perfil">
         </div>
     </div>
@@ -26,12 +25,50 @@
 
 
 </form>
+<section class="container d-flex justify-content-center my-3">
+    <a href='/'><p class="mx-2">Volver al Inicio</p></a>      <a href='/logout'><p class="mx-2">Cerrar Sesion</p></a>
+
+<script>
+    const cambios = document.getElementById("cambios");
+
+    cambios.addEventListener("click", function (e) {
+        e.preventDefault();
+        let nombre = document.getElementById("nombre").value;
+        let password = document.getElementById("password").value;
+        let exp = document.getElementById("exp").value;
+        let espc = document.getElementById("especialidad").value;
+        let token = localStorage.getItem("token");
+
+        fetch("/panel", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ nombre, password, exp, espc })
+        }).then(res => {
+            if (!res.ok) {
+                alert("Error al editar usuario");
+            }
+            alert("Usuario editado correctamente");
+        }).then(data => {
+            console.log(data);
+        });
+    });
+
+        
+</script>
+
+
+
+
 
 <style>
     .profile-pic {
   width: 200px; 
   height: 200px; 
   overflow: hidden; 
+  justify-content: center;
 }
 
 .profile-pic img {
@@ -42,10 +79,4 @@
 </style>
 
 
-<script>
-    const cambios = document.getElementById("cambios");
-    cambios.addEventListener('click',function(e){
-        e.preventDefault()
-        console.log('clicl en cambios')
-    })
-</script>
+
