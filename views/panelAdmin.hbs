@@ -1,0 +1,71 @@
+<table class="table table-bordered border-primary">
+    <thead class="">
+        <tr>
+            <th scope="col">Foto</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each skaters}}
+        <tr>
+            <td class="text-center"><img src="/imgs/{{this.foto}}" alt="{{this.nombre}}" width="100"></td>
+            <td>{{this.nombre}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.especialidad}}</td>
+            {{! If the value of the estado property is true, display 'Aprobado'; otherwise, display 'En revisión' }}
+            {{#if this.estado}}
+            <td style="color:rgb(83, 176, 83);">Aprobado</td>
+            {{else}}
+            <td style="color:rgb(127, 67, 14);">En revisión <button class="btn btn-outline-success btn-sm ms-3 aprobar">Aprobar</button></td>
+            {{/if}}
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
+
+
+<div class="col-12 py-4 d-flex justify-content-center align-items-center">
+    <p class="px-3"><a href="/admin">Admin</a></p>
+    <p class="px-3"><a href="/logout">Logout</a></p>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const aprobarButtons = document.getElementsByClassName("aprobar");
+
+        for (let i = 0; i < aprobarButtons.length; i++) {
+            aprobarButtons[i].addEventListener("click", function(e) {
+                e.preventDefault()
+                const email = this.parentElement.parentElement.children[2].textContent
+                fetch('/aprobar',{
+                    method:'PUT',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    body: JSON.stringify({email})
+                }).then(res => {
+                    if(!res.ok){
+                        alert('Error al aprobar')
+                    }
+
+                    
+                }).then(data =>{
+                    console.log(data)
+                    window.location.reload()
+                    }
+               //refresh the page
+                    
+                    ).catch(err => {
+                    console.log(err)
+                })
+            });
+        }
+    });
+</script>

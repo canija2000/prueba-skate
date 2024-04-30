@@ -1,0 +1,56 @@
+<a href="/">Inicio</a>
+
+{{! Path: views/register.hbs }}
+
+<div class="container  py-3">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card py-5 bg-dark">
+                <h5 class="card-title text-center text-white">Login</h5>
+                <div class="card-body">
+                    
+                    <form action="/adminlog" method="POST">
+                        <div class="mb-3 text-white">
+                            <label for="user" class="form-label">User</label>
+                            <input type="text" class="form-control" id="user" name="user" required>
+                        </div>
+                        <div class="mb-3 text-white">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid">
+                            <button id ="admin" type="submit" class="btn btn-danger">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const admin = document.getElementById("admin");
+
+    admin.addEventListener("click", function (e) {
+      e.preventDefault();
+      let user = document.getElementById("user").value;
+      let password = document.getElementById("password").value;
+      
+      fetch("/adminlog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user, password }),
+      }).then(res =>{
+        if(!res.ok){
+          alert("Error al iniciar sesion")
+        }
+        
+      }).then(data =>{
+        localStorage.setItem("token", data.token);
+        console.log(err);
+      });
+      
+    });
